@@ -1,72 +1,44 @@
-from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
-from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+
 from .models import Article, Author
 from .serializers import ArticleSerializer, AuthorSerializer
 
 
-class AuthorView(APIView):
-    def get(self, request):
-        authors = Author.objects.all()
-        serializer = AuthorSerializer(authors, many=True)
-        return Response({"authors": serializer.data})
+class ArticleView(ListCreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
 
-    def post(self, request):
-        author = request.data.get('author')
-        serializer = AuthorSerializer(data=author)
-        if serializer.is_valid(raise_exception=True):
-            author_saved = serializer.save()
-        return Response({"success": "Author '{}' created successfully".format(
-            author_saved.name)})
-
-    def put(self, request, pk):
-        saved_author = get_object_or_404(Author.objects.all(), pk=pk)
-        data = request.data.get('author')
-        serializer = AuthorSerializer(instance=saved_author, data=data, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            author_saved = serializer.save()
-        return Response({
-            "success": "Author '{}' updated successfully".format(author_saved.name)
-        })
-
-    def delete(self, request, pk):
-        author = get_object_or_404(Author.objects.all(), pk=pk)
-        author.delete()
-        return Response({
-            "message": "Author with id `{}` has been deleted.".format(pk)
-        }, status=204)
+    def perform_create(self, serializer):
+        author = get_object_or_404(Author, id=self.request.data.get('author_id'))
+        return serializer.save(author=author)
 
 
-class ArticleView(APIView):
-    def get(self, request):
-        articles = Article.objects.all()
-        serializer = ArticleSerializer(articles, many=True)
-        return Response({"articles": serializer.data})
-
-    def post(self, request):
-        article = request.data.get('article')
-        # Create an article from the above data
-        serializer = ArticleSerializer(data=article)
-        if serializer.is_valid(raise_exception=True):
-            article_saved = serializer.save()
-        return Response({"success": "Article '{}' created successfully".format(
-            article_saved.title)})
-
-    def put(self, request, pk):
-        saved_article = get_object_or_404(Article.objects.all(), pk=pk)
-        data = request.data.get('article')
-        serializer = ArticleSerializer(instance=saved_article, data=data, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            article_saved = serializer.save()
-        return Response({
-            "success": "Article '{}' updated successfully".format(article_saved.title)
-        })
-
-    def delete(self, request, pk):
-        article = get_object_or_404(Article.objects.all(), pk=pk)
-        article.delete()
-        return Response({
-            "message": "Article with id `{}` has been deleted.".format(pk)
-        }, status=204)
+class SingleArticleView(RetrieveUpdateDestroyAPIView):
+    queryset = Article.objects.all()
+    # 'aggregate', 'all', 'annotate', 'as_manager', 'bulk_create', 'bulk_update',
+    # 'complex_filter', 'count', 'create', 'dates', 'datetimes', 'db', 'defer',
+    # 'delete', 'difference', 'distinct', 'earliest', 'exclude', 'exists', 'explain',
+    # 'extra', 'filter', 'first', 'get', 'get_or_create', 'in_bulk', 'intersection',
+    # 'iterator', 'last', 'latest', 'model', 'none', 'only', 'order_by', 'ordered',
+    # 'prefetch_related', 'query', 'raw', 'resolve_expression', 'reverse',
+    # 'select_for_update', 'select_related', 'union', 'update', 'update_or_create',
+    # 'using', 'values', 'values_list']
+    serializer_class = ArticleSerializer
 
 
+class AuthorView(ListCreateAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+    # def perform_create(self, serializer):
+    #     print('start')
+    #     author = get_object_or_404(Author, id=self.request.data.get('id'))
+    #     print(author)
+    #     print("ok3")
+    #     return serializer.save(author=author)
+
+
+class SingleAuthorView(RetrieveUpdateDestroyAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
