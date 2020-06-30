@@ -1,0 +1,14 @@
+### Python ###
+.idea/
+/.venv/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.sqlite3
+
+### Project specific ###
+settings.py
+migrations
+

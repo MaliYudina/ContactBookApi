@@ -2,6 +2,10 @@ GET:
 
 curl --location --request GET 'http://127.0.0.1:8000/api/authors/'
 
+curl --location --request GET 'http://127.0.0.1:8000/api/articles/' | python -mjson.tool
+
+curl -s http://127.0.0.1:8000/api/articles/ | python -mjson.tool
+
 ANSWER:
 {
     "authors": [
@@ -18,23 +22,21 @@ ANSWER:
  }
  
 
-
-curl --location --request GET 'http://127.0.0.1:8000/api/groups/'
-
 -------------------
 
 POST:
 
 curl --location --request POST 'http://127.0.0.1:8000/api/articles/' \
 --header 'Content-Type: application/json' \
---data-raw '{
-    "article": {
-        "title": "Release of research documentation on GHT-6",
-        "description": "Results for the latest research",
-        "body": "Ipsum Lorem",
-        "author_id": "1"
-    }
-}'
+--data-raw 
+'
+{
+    "title": "Release of research documentation on GHT-6",
+    "description": "Results for the latest research",
+    "body": "Ipsum Lorem",
+    "author_id": "1"
+}
+'
 
 
 ANSWER:
@@ -47,13 +49,13 @@ PUT:
 
 curl --location --request PUT 'http://127.0.0.1:8000/api/authors/2' \
 --header 'Content-Type: application/json' \
---data-raw '{
-    "author": 
+--data-raw 
+' 
         {
             "name": "John Winders",
             "email": "winders2@email.ru"
         }
-}'
+'
 
 
 {
@@ -64,15 +66,8 @@ curl --location --request PUT 'http://127.0.0.1:8000/api/authors/2' \
 
 DELETE:
 
-curl --location --request DELETE 'http://127.0.0.1:8000/api/authors/2' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "author": 
-        {
-            "name": "Bell Winders",
-            "email": "winders2@email.ru"
-        }
-}'
+
+curl --location --request DELETE 'http://127.0.0.1:8000/api/authors/2' 
 
 ANSWER:
 
