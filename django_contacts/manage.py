@@ -2,10 +2,12 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from rest_framework.settings import settings
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_contacts.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'contacts.settings')
+    # settings.configure()
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
