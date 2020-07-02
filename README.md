@@ -1,76 +1,86 @@
-GET:
+*GET:*
 
-curl --location --request GET 'http://127.0.0.1:8000/api/authors/'
+curl --location --request GET 'http://127.0.0.1:8000/api/groups/'
 
-curl --location --request GET 'http://127.0.0.1:8000/api/articles/' | python -mjson.tool
+curl --location --request GET 'http://127.0.0.1:8000/api/contacts/' | python -mjson.tool
 
-curl -s http://127.0.0.1:8000/api/articles/ | python -mjson.tool
+curl -s http://127.0.0.1:8000/api/contacts/ | python -mjson.tool
 
 ANSWER:
-{
-    "authors": [
-        {
-            "name": "Kate Willson",
-            "email": "my@email.ru",
-            "id": 1
-        },
-        {
-            "name": "Bell Winders",
-            "email": "winders2@email.com",
-            "id": 2
-        },
- }
+[
+    {
+        "name": "Kate Wilson",
+        "phone": 898372873,
+        "email": "some@email.com",
+        "id_db_contact": 1,
+        "comment": "secretary",
+        "category": 3,
+        "group_id": 1
+    },
+    {
+        "name": "Ashley Braun",
+        "phone": 568372873,
+        "email": "ashley@mail.com",
+        "id_db_contact": 2,
+        "comment": "friend of Paul",
+        "category": 2,
+        "group_id": 1
+    }
+]
  
 
 -------------------
 
-POST:
+*POST:*
 
-curl --location --request POST 'http://127.0.0.1:8000/api/articles/' \
+curl --location --request POST 'http://127.0.0.1:8000/api/contacts/' \
 --header 'Content-Type: application/json' \
 --data-raw 
 '
 {
-    "title": "Release of research documentation on GHT-6",
-    "description": "Results for the latest research",
-    "body": "Ipsum Lorem",
-    "author_id": "1"
+        "name": "Ashley Braun",
+        "phone": 568372873,
+        "email": "ashley@mail.com",
+        "comment": "friend of Paul",
+        "category": 2,
+        "group_id": 1
 }
 '
 
 
 ANSWER:
 
-{"success":"Article 'Release of research documentation on GHT-6' created successfully"}
+200 - success
+404 - error
+
 
 -------------------
 
-PUT:
+*PUT:*
 
-curl --location --request PUT 'http://127.0.0.1:8000/api/authors/2' \
+partial update available 
+
+curl --location --request PUT 'http://127.0.0.1:8000/api/groups/2' \
 --header 'Content-Type: application/json' \
 --data-raw 
-' 
-        {
-            "name": "John Winders",
-            "email": "winders2@email.ru"
-        }
 '
-
-
-{
-    "success": "Author 'John Winders' updated successfully"
-}
-
--------------------
-
-DELETE:
-
-
-curl --location --request DELETE 'http://127.0.0.1:8000/api/authors/2' 
+{"name": "Sport"}
+'
 
 ANSWER:
 
-{
-    "message": "Author with id `2` has been deleted."
-}
+200 - success
+404 - error
+
+-------------------
+
+*DELETE:*
+
+
+curl --location --request DELETE 'http://127.0.0.1:8000/api/contacts/2' 
+
+
+ANSWER:
+
+200 - success
+404 - error
