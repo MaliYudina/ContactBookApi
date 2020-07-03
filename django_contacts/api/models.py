@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Group(models.Model):
+    """
+    Group class defines the attributes of a Group
+    """
     name = models.CharField(verbose_name="Group name", max_length=60, unique=True)
     CATEGORY_CHOICES = ((1, "Family"),
                         (2, "Private"),
@@ -17,11 +20,11 @@ class Group(models.Model):
     def __str__(self):
         return self.name
 
-    def __repr__(self):
-        return self.name + ' is added.'
-
 
 class Contact(models.Model):
+    """
+    Contact class defines the attributes of a Contact
+    """
     name = models.CharField(verbose_name="Name, Surname", max_length=255, unique=True)
     phone = models.IntegerField(verbose_name="Phone", unique=True)
     email = models.EmailField(verbose_name="Email")
