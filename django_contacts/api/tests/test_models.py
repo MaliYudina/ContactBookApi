@@ -1,33 +1,32 @@
 from django.test import TestCase
-# from ..models import Author, Article
-from django_contacts.api.models import Group, Article
+# from ..models import Group, Contact
+# from django_contacts.api.models import Group, Contact
+from ..models import Group, Contact
+from django.test import TestCase
 
 
-class AuthorTest(TestCase):
-
-    def setUp(self):
-        Group.objects.create(name="Samuel Harrison", email="sam@ok.com")
-        Group.objects.create(name="Annabel Wasserman", email="bel@em.com")
-
-    def test_saved_authors(self):
-        authors = Group.objects.count()
-        self.assertEqual(authors, 2)
-
-
-class ArticleTest(TestCase):
+class GroupTest(TestCase):
 
     def setUp(self):
-        Article.objects.create(
-            title="Monkeys may share a key grammar-related skill with humans",
-            description="A capacity for recursion evolved early in primate evolution, a contested study suggests",
-            category=3,
-            body="An aptitude for mentally stringing together related items, "
-                 "often cited as a hallmark of human language, "
-                 "may have deep roots in primate evolution, a new study suggests.",
-            author_id=1
-        )
-        self.author = Group.objects.get(id=1)
+        Group.objects.create(name="Colleagues", category=3)
+        Group.objects.create(name="Service", category=6)
 
-    def test_saved_articles(self):
-        articles = Article.objects.count()
-        self.assertEqual(articles, 1)
+    def test_saved_groups(self):
+        groups = Group.objects.count()
+        self.assertEqual(groups, 2)
+
+
+# class ContactTest(TestCase):
+#
+#     def setUp(self):
+#         Contact.objects.create(
+#                 name="Peter Black",
+#                 phone="908652456",
+#                 email="email@ya.ru",
+#                 comment="guy from business training",
+#             )
+#         self.contact = Group.objects.get(id=1)
+#
+#     def test_saved_contacts(self):
+#         contacts = Contact.objects.count()
+#         self.assertEqual(contacts, 1)

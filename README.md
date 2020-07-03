@@ -1,4 +1,4 @@
-*GET:*
+**GET:**
 
 curl --location --request GET 'http://127.0.0.1:8000/api/groups/'
 
@@ -9,12 +9,11 @@ curl -s http://127.0.0.1:8000/api/contacts/ | python -mjson.tool
 ANSWER:
 [
     {
-        "name": "Kate Wilson",
-        "phone": 898372873,
-        "email": "some@email.com",
+        "name": "Walter Simpson",
+        "phone": 67573,
+        "email": "walt@mail.com",
         "id_db_contact": 1,
-        "comment": "secretary",
-        "category": 3,
+        "comment": "Clara's husband",
         "group_id": 1
     },
     {
@@ -23,7 +22,6 @@ ANSWER:
         "email": "ashley@mail.com",
         "id_db_contact": 2,
         "comment": "friend of Paul",
-        "category": 2,
         "group_id": 1
     }
 ]
@@ -31,18 +29,17 @@ ANSWER:
 
 -------------------
 
-*POST:*
+**POST:**
 
 curl --location --request POST 'http://127.0.0.1:8000/api/contacts/' \
 --header 'Content-Type: application/json' \
 --data-raw 
 '
 {
-        "name": "Ashley Braun",
-        "phone": 568372873,
-        "email": "ashley@mail.com",
-        "comment": "friend of Paul",
-        "category": 2,
+        "name": "Frank Sinatra",
+        "phone": 9677563,
+        "email": "sina@mail.com",
+        "comment": "man from TV show",
         "group_id": 1
 }
 '
@@ -56,15 +53,16 @@ ANSWER:
 
 -------------------
 
-*PUT:*
-
-partial update available 
+**PUT:**
 
 curl --location --request PUT 'http://127.0.0.1:8000/api/groups/2' \
 --header 'Content-Type: application/json' \
 --data-raw 
 '
-{"name": "Sport"}
+{
+    "name": "Party buddies",
+    "category": 4
+}
 '
 
 ANSWER:
@@ -74,7 +72,7 @@ ANSWER:
 
 -------------------
 
-*DELETE:*
+**DELETE:**
 
 
 curl --location --request DELETE 'http://127.0.0.1:8000/api/contacts/2' 
@@ -84,3 +82,7 @@ ANSWER:
 
 200 - success
 404 - error
+
+*run tests hint:*
+cd api_contacts 
+$ python django_contacts/manage.py test api
